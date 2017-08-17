@@ -34,9 +34,4 @@ export default class Ball extends Circle{
             return true;
         }
     }
-
-    speedUp(){
-        //this.directionX += Math.sign(this.directionX) * 0.5;
-	    //this.directionY += Math.sign(this.directionY) * 0.5;
-    }
 }

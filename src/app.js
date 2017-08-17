@@ -45,15 +45,6 @@ function run(){
     //ballDirectionY++;
 }
 
-function key(evt){
-    if(evt.keyCode == 38){
-        paddle1.moveUp(45);
-    }
-    if(evt.keyCode == 40){
-        paddle1.moveDown(45);
-    }
-}
-
 function renderGame(){
     BACK.render();
     paddle1.render();
@@ -65,9 +56,14 @@ function renderGame(){
     canvasContext.fillText(sc2, (canvas.width/2)+100, 50);
 }
 
-function speedUp(){
-    indicator++;
+function key(evt){
+    if(evt.keyCode == 38){
+        paddle1.moveUp(45);
     }
+    if(evt.keyCode == 40){
+        paddle1.moveDown(45);
+    }
+}
 
 function checkBall(){
     ball.check(frameTop, frameBot, paddle1, paddle2);
