@@ -11,7 +11,6 @@ var canvasContext = canvas.getContext('2d');
 var sc1=0;
 var sc2=0;
 
-
 const BACK = new Rectangle(canvasContext, 0, 0, canvas.width, canvas.height, 'black');
 const frameTop = new Rectangle(canvasContext, 0, -10, canvas.width, 10, 'white');
 const frameBot = new Rectangle(canvasContext, 0, canvas.height, canvas.width, 10, 'white');
@@ -27,24 +26,18 @@ var ball = new Ball(canvasContext, canvas.width, canvas.height, 'white');
 
 window.onload = function main(){
     reset();
-    setInterval(run, 1000/30);
+    setInterval(run, 1000/60);
 }
 
 
 function run(){
-    BACK.render();
-    paddle1.render();
+    for(var i = 0; i < ball.indicator; i++){
+    renderGame();
     comp2();
-    paddle2.render();
-    //moveBall();
-    ball.render();
-    //console.log(ball.directionX, ball.directionY);
     checkBall();
-    ball.move(ball.directionX, ball.directionY);
+    ball.move(ball.speedX, ball.speedY);
+    }
 
-    canvasContext.fillText("Score: ", 100, 50);
-    canvasContext.fillText(sc1, (canvas.width/2)-100, 50);
-    canvasContext.fillText(sc2, (canvas.width/2)+100, 50);
     var elem = document.getElementById('page');
     elem.addEventListener("keydown", key);
 
@@ -52,14 +45,12 @@ function run(){
     //ballDirectionY++;
 }
 
-//function ()
-
 function key(evt){
     if(evt.keyCode == 38){
-        paddle1.moveUp(40);
+        paddle1.moveUp(45);
     }
     if(evt.keyCode == 40){
-        paddle1.moveDown(40);
+        paddle1.moveDown(45);
     }
 }
 
@@ -68,22 +59,18 @@ function renderGame(){
     paddle1.render();
     paddle2.render();
     ball.render();
+
+    canvasContext.fillText("Score: ", 100, 50);
+    canvasContext.fillText(sc1, (canvas.width/2)-100, 50);
+    canvasContext.fillText(sc2, (canvas.width/2)+100, 50);
 }
 
-function moveBall(){
-    for(var i=1;i<ball.directionX+1;i++){
-        ball.move(Math.sign(ball.directionX) * 1 , ball.directionY / ball.directionX);
-        console.log(ball.directionY, ball.directionX);
-        console.log(i, ball.directionY / ball.directionX);
-        checkBall();
-        //renderGame();
-
+function speedUp(){
+    indicator++;
     }
-}
 
 function checkBall(){
     ball.check(frameTop, frameBot, paddle1, paddle2);
-    console.log("check1");
     if(ball.collideObjects(frameLeft)){
         reset();
         sc2++;
@@ -103,8 +90,8 @@ function reset(){
 
 function comp2(){
     if(paddle2.centerY < ball.centerY - 35){
-		paddle2.moveDown(15);
+		paddle2.moveDown(10);
 	} else if(paddle2.centerY > ball.centerY + 35){
-		paddle2.moveUp(15);
+		paddle2.moveUp(10);
 	}
 }

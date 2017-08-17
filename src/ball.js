@@ -10,22 +10,22 @@ export default class Ball extends Circle{
 
     reset(width, height){
         super.reset(width * 0.5, height * 0.5);
-        var rnd1 = Math.sign(Math.random() * 2 - 1);
-        var rnd2 = Math.sign(Math.random() * 2 - 1);
-        this.directionY = Math.sign(rnd1) * Math.ceil(Math.random() * 10 + 5);
+        var rnd1 = Math.random() * 2 - 1;
+        var rnd2 = Math.random() * 2 - 1;
+        this.directionY = Math.sign(rnd1) * Math.ceil(Math.random() * 2 + 9);
         this.directionX = Math.sign(rnd2) * (20 - Math.abs(this.directionY));
+        this.speedY = this.directionY / this.directionY;
+        this.speedX = this.directionX / this.directionY;
+        this.indicator = 5;
     }
 
     check(frame1, frame2, paddle1, paddle2){
         if(this.collideObjects(frame1) || this.collideObjects(frame2)){
-            this.bounce();
-            this.directionY = -this.directionY;
-            console.log("HI");
+            this.indicator += 0.1;
+            this.speedY = -this.speedY;
         } else if(this.collideObjects(paddle1) || this.collideObjects(paddle2)){
-            this.bounce();
-            this.directionX = -this.directionX;
-            console.log("Bye");
-            console.log(this.directionX);
+            this.indicator += 0.1;
+            this.speedX = -this.speedX;
         }
     }
 
@@ -35,8 +35,8 @@ export default class Ball extends Circle{
         }
     }
 
-    bounce(){
-        this.directionX += Math.sign(this.directionX) * 0.5;
-	    this.directionY += Math.sign(this.directionY) * 0.5;
+    speedUp(){
+        //this.directionX += Math.sign(this.directionX) * 0.5;
+	    //this.directionY += Math.sign(this.directionY) * 0.5;
     }
 }
